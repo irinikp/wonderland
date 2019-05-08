@@ -13,19 +13,37 @@ class NumberOperator
      *
      * @return bool
      */
-    public static function hasAllTheSameDigits($number1, $number2): bool
+    public function hasAllTheSameDigits($number1, $number2): bool
     {
-        return false;
+        $number1_array = $this->numberDigitsToArray($number1);
+        $number2_array = $this->numberDigitsToArray($number2);
+
+        return $this->areArraysEqual($number1_array, $number2_array);
     }
 
     /**
-     * @param int $number->getValue()
+     * @param int $number
      *
      * @return int
      */
-    public static function getNumberOfDigits($number): int
+    public function getNumberOfDigits($number): int
     {
         return strlen((string)$number);
+    }
+
+    protected function areArraysEqual($array1, $array2): bool
+    {
+        return empty(array_diff($array1, $array2));
+    }
+
+    /**
+     * @param int $number
+     *
+     * @return array<string>
+     */
+    protected function numberDigitsToArray($number): array
+    {
+        return str_split((string)$number);
     }
 
 }
