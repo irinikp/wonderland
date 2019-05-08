@@ -25,7 +25,7 @@ class NumberOperator
      */
     public static function getNumberOfDigits($number): int
     {
-        return 0;
+        return strlen((string)$number);
     }
 
 }
