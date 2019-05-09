@@ -4,6 +4,10 @@
 namespace Wonderland;
 
 
+/**
+ * Class NumberOperator
+ * @package Wonderland
+ */
 class NumberOperator
 {
 
@@ -31,6 +35,12 @@ class NumberOperator
         return strlen((string)$number);
     }
 
+    /**
+     * @param array $array1
+     * @param array $array2
+     *
+     * @return bool
+     */
     protected function areArraysEqual($array1, $array2): bool
     {
         return empty(array_diff($array1, $array2));
