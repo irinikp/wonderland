@@ -7,7 +7,8 @@ namespace Wonderland;
  */
 class WonderlandNumber
 {
-
+    protected const MIN_6_DIGIT_NUMBER = 100000;
+    protected const MIN_7_DIGIT_NUMBER = 1000000;
     /**
      * @var int
      */
@@ -33,26 +34,10 @@ class WonderlandNumber
      */
     protected function computeValue(): int
     {
-        $multiple = 1;
-        for ($i=100000; $i<1000000; ++$i) {
-            if ($this->hasTheMultipleSameDigits($i, 2)) {
+        $multiple = 0;
+        for ($i=self::MIN_6_DIGIT_NUMBER; $i<self::MIN_7_DIGIT_NUMBER; ++$i) {
+            if ($this->haveTheMultiplesSameDigits($i, 2, 6)) {
                 $multiple = $i;
-                if (!$this->hasTheMultipleSameDigits($multiple, 3)) {
-                    $multiple = 1;
-                    continue;
-                }
-                if (!$this->hasTheMultipleSameDigits($multiple, 4)) {
-                    $multiple = 1;
-                    continue;
-                }
-                if (!$this->hasTheMultipleSameDigits($multiple, 5)) {
-                    $multiple = 1;
-                    continue;
-                }
-                if (!$this->hasTheMultipleSameDigits($multiple, 6)) {
-                    $multiple = 1;
-                    continue;
-                }
                 break;
             }
         }
@@ -62,13 +47,18 @@ class WonderlandNumber
     /**
      * @param int $number
      * @param int $multiplier
+     * @param int $multiplier_limit
      *
      * @return bool
      */
-    protected function hasTheMultipleSameDigits($number, $multiplier): bool
+    protected function haveTheMultiplesSameDigits($number, $multiplier, $multiplier_limit): bool
     {
+        if ($multiplier > $multiplier_limit ) return true;
         $multiple = $multiplier * $number;
-        return $this->number_operator->hasAllTheSameDigits($number, $multiple);
+        if ($this->number_operator->hasAllTheSameDigits($number, $multiple) ) {
+            return $this->haveTheMultiplesSameDigits($number, $multiplier+1, $multiplier_limit);
+        }
+        return false;
     }
 
     /**
